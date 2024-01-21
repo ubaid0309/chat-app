@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -69,29 +70,31 @@
 }
 
 body {
-  background: hsla(47, 100%, 97%, 1);
+  background: hsla(0, 0%, 96%, 1);
 
   background: linear-gradient(
     45deg,
-    hsla(47, 100%, 97%, 1) 0%,
-    hsla(50, 100%, 95%, 1) 100%
+    hsla(0, 0%, 96%, 1) 0%,
+    hsla(15, 29%, 95%, 1) 100%
   );
 
   background: -moz-linear-gradient(
     45deg,
-    hsla(47, 100%, 97%, 1) 0%,
-    hsla(50, 100%, 95%, 1) 100%
+    hsla(0, 0%, 96%, 1) 0%,
+    hsla(15, 29%, 95%, 1) 100%
   );
 
   background: -webkit-linear-gradient(
-    180deg,
-    hsla(47, 100%, 97%, 1) 0%,
-    hsla(50, 100%, 95%, 1) 100%
+    45deg,
+    hsla(0, 0%, 96%, 1) 0%,
+    hsla(15, 29%, 95%, 1) 100%
   );
 
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FFFCF1", endColorstr="#FFFBE8", GradientType=1 );
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#F5F5F5", endColorstr="#F5EFED", GradientType=1 );
 
   height: 100vh;
+
+  background-image: url("./assets//images/back-blob.svg");
 }
 @layer base {
   * {

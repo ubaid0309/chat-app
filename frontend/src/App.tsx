@@ -4,7 +4,7 @@ import Chat from "./components/Chat";
 
 function App() {
   return (
-    <div className="font-roboto">
+    <div className="font-prompt h-screen w-screen">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/chats" element={<Chat />} />

@@ -21,6 +21,7 @@ const config: Config = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
+        prompt: ["Prompt", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
