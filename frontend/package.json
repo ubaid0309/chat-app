@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "private": true,
+  "proxy": "http://127.0.0.1:5000",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -12,6 +13,7 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
+    "axios": "^1.6.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.312.0",

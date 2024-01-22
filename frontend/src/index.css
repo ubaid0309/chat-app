@@ -95,6 +95,7 @@ body {
   height: 100vh;
 
   background-image: url("./assets//images/back-blob.svg");
+  background-repeat: no-repeat;
 }
 @layer base {
   * {

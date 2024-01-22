@@ -18,10 +18,17 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function submitHandler(e: any) {
+  const submitHandler = function (e: any) {
     e.preventDefault();
     console.log(email, password);
-  }
+  };
+
+  const changeForm = function (formType: string) {
+    setActiveForm(formType);
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  };
   return (
     <div className="flex justify-center items-center h-full w-full ">
       <div className="relative login-container flex rounded-xl  bg-[#edf6f9] w-[60%] shadow-md ">
@@ -34,7 +41,7 @@ const Login = () => {
         </div>
         <div className="right-side w-full md:w-[50%]">
           {activeForm === "sign-in" ? (
-            <form>
+            <form onSubmit={submitHandler}>
               <Card className="flex flex-col gap-2 ">
                 <CardHeader>
                   <CardTitle className="font-poppins text-3xl font-semibold">
@@ -43,7 +50,9 @@ const Login = () => {
                       New to Chat App ?{" "}
                       <button
                         className="text-blue-700 font-medium"
-                        onClick={() => setActiveForm("sign-up")}
+                        onClick={() => {
+                          changeForm("sign-up");
+                        }}
                       >
                         Create an account
                       </button>
@@ -97,18 +106,14 @@ const Login = () => {
                   </div>
                 </CardContent>
                 <CardFooter className="mt-4">
-                  <Button
-                    type="submit"
-                    className="w-[80%] mx-auto"
-                    onClick={submitHandler}
-                  >
+                  <Button type="submit" className="w-[80%] mx-auto">
                     Sign In
                   </Button>
                 </CardFooter>
               </Card>
             </form>
           ) : (
-            <form>
+            <form onSubmit={submitHandler}>
               <Card className="flex flex-col gap-2 ">
                 <CardHeader>
                   <CardTitle className="font-poppins text-3xl font-semibold">
@@ -209,11 +214,7 @@ const Login = () => {
                   </div>
                 </CardContent>
                 <CardFooter className="mt-4">
-                  <Button
-                    type="submit"
-                    className="w-[80%] mx-auto"
-                    onClick={submitHandler}
-                  >
+                  <Button type="submit" className="w-[80%] mx-auto">
                     {activeForm === "sign-in" ? "Sign In" : "Sign Up"}
                   </Button>
                 </CardFooter>
