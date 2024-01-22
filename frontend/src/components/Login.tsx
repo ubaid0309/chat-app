@@ -17,6 +17,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const submitHandler = function (e: any) {
     e.preventDefault();
@@ -130,6 +131,21 @@ const Login = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-4">
+                  <div>
+                    <p className="flex gap-1 text-sm font-medium px-1 mb-1">
+                      Name <span className="text-red-500">*</span>
+                    </p>
+                    <div className="flex items-center border px-2 rounded-md">
+                      <Input
+                        required
+                        type="text"
+                        placeholder="Enter your name"
+                        className="placeholder:font-poppins"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
+                  </div>
                   <div>
                     <p className="flex gap-1 text-sm font-medium px-1 mb-1">
                       Email <span className="text-red-500">*</span>
