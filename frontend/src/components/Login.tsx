@@ -29,9 +29,10 @@ const Login = () => {
     setEmail("");
     setPassword("");
     setConfirmPassword("");
+    setName("");
   };
   return (
-    <div className="flex justify-center items-center h-full w-full ">
+    <div className="login flex justify-center items-center h-full w-full ">
       <div className="relative login-container flex rounded-xl  bg-[#edf6f9] w-[60%] shadow-md ">
         <div className="left-side w-[50%] max-md:hidden">
           <img

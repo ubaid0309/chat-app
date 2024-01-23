@@ -93,9 +93,6 @@ body {
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#F5F5F5", endColorstr="#F5EFED", GradientType=1 );
 
   height: 100vh;
-
-  background-image: url("./assets//images/back-blob.svg");
-  background-repeat: no-repeat;
 }
 @layer base {
   * {
@@ -104,4 +101,9 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.login {
+  background-image: url("./assets//images/back-blob.svg");
+  background-repeat: no-repeat;
 }
