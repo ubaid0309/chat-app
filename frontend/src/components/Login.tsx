@@ -10,18 +10,70 @@ import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-
+import { cloud_name, upload_preset_name } from "../constant/constant";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { error } from "console";
+const CLOUDINARY_API_KEY = import.meta.env.CLOUDINARY_API_KEY;
 const Login = () => {
   const [activeForm, setActiveForm] = useState("sign-in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const submitHandler = function (e: any) {
+  const navigate = useNavigate();
+
+  //eslint-disable-next-line
+  const submitHandler = async function (e: any, formType: string) {
     e.preventDefault();
-    console.log(email, password);
+    if (formType === "sign-in") {
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const { data } = await axios.post(
+          "http://localhost:5000/api/user/login",
+          { email, password },
+          config
+        );
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        toast.success("Login Successful ");
+        navigate("/chats");
+        //eslint-disable-next-line
+      } catch (error: any) {
+        toast.error(error.message);
+        throw new Error(error.message);
+      }
+    } else {
+      if (password !== confirmPassword) {
+        toast.error("Password does not match");
+        return;
+      }
+
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const { data } = await axios.post(
+          "http://localhost:5000/api/user",
+          { name, email, password, profilePicture },
+          config
+        );
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        toast.success("Registration Successfully");
+        navigate("/chats");
+        //eslint-disable-next-line
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    }
   };
 
   const changeForm = function (formType: string) {
@@ -30,7 +82,37 @@ const Login = () => {
     setPassword("");
     setConfirmPassword("");
     setName("");
+    setProfilePicture("");
   };
+
+  //eslint-disable-next-line
+  async function postProfilePicture(picture: any) {
+    if (picture === undefined || picture === null) {
+      toast.error("Please select a profile picture");
+      return;
+    }
+
+    if (picture.type === "image/jpeg" || picture.type === "image/png") {
+      try {
+        const fileData = new FormData();
+        fileData.append("file", picture);
+        fileData.append("upload_preset", upload_preset_name);
+        fileData.append("api_key", `${CLOUDINARY_API_KEY}`);
+        fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+          method: "post",
+          body: fileData,
+        })
+          .then((response) => response.json())
+          .then((jsonResponse) =>
+            setProfilePicture(jsonResponse.url.toString())
+          );
+      } catch (err) {
+        throw new Error("Failed to upload profile picture");
+      }
+    } else {
+      toast.error("Please select .png of .jpg files");
+    }
+  }
   return (
     <div className="login flex justify-center items-center h-full w-full ">
       <div className="relative login-container flex rounded-xl  bg-[#edf6f9] w-[60%] shadow-md ">
@@ -43,7 +125,7 @@ const Login = () => {
         </div>
         <div className="right-side w-full md:w-[50%]">
           {activeForm === "sign-in" ? (
-            <form onSubmit={submitHandler}>
+            <form onSubmit={(e) => submitHandler(e, "sign-in")}>
               <Card className="flex flex-col gap-2 ">
                 <CardHeader>
                   <CardTitle className="font-poppins text-3xl font-semibold">
@@ -115,7 +197,7 @@ const Login = () => {
               </Card>
             </form>
           ) : (
-            <form onSubmit={submitHandler}>
+            <form onSubmit={(e) => submitHandler(e, "sign-up")}>
               <Card className="flex flex-col gap-2 ">
                 <CardHeader>
                   <CardTitle className="font-poppins text-3xl font-semibold">
@@ -226,7 +308,14 @@ const Login = () => {
                       Profile picture
                     </p>
                     <div className="flex items-center border px-2 rounded-md">
-                      <Input type="file" className="placeholder:font-poppins" />
+                      <Input
+                        type="file"
+                        className="placeholder:font-poppins"
+                        //eslint-disable-next-line
+                        onChange={(e: any) =>
+                          postProfilePicture(e.target.files[0])
+                        }
+                      />
                     </div>
                   </div>
                 </CardContent>

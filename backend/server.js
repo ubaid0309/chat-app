@@ -16,12 +16,9 @@ app.use(
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Api is running ");
-});
 
 
 app.use("/api/user", userRoutes)
 
 
-app.listen(PORT, console.log(`listening on port  ${PORT}`));
+app.listen(5000, console.log(`listening on port  5000`));

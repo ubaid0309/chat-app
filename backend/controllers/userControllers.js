@@ -72,7 +72,7 @@ const authenticateUser = expressAsyncHandler(async (req, res) => {
     }
 
     catch (err) {
-        throw new Error(err)
+        throw new Error(err.message)
     }
 })
 module.exports = { registerUser, authenticateUser };
