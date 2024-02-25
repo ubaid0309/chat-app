@@ -75,5 +75,10 @@ const authenticateUser = expressAsyncHandler(async (req, res) => {
         throw new Error(err.message)
     }
 })
-module.exports = { registerUser, authenticateUser };
+
+const allUsers = expressAsyncHandler(async (req, res) => {
+    const searchQuery = req.query;
+    console.log(searchQuery)
+})
+module.exports = { registerUser, authenticateUser, allUsers };
 
