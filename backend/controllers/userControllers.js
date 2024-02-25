@@ -1,8 +1,9 @@
 const expressAsyncHandler = require("express-async-handler")
 const UserModel = require("../models/userModel")
 const generateToken = require("../config/generateToken");
+const authMiddleware = require("../middleware/authMiddleware");
 
-const registerUser = expressAsyncHandler(async (req, res) => {
+const registerUser = expressAsyncHandler(authMiddleware, async (req, res) => {
     const { name, email, password, profilePicture } = req.body;
 
     try {
@@ -77,8 +78,20 @@ const authenticateUser = expressAsyncHandler(async (req, res) => {
 })
 
 const allUsers = expressAsyncHandler(async (req, res) => {
-    const searchQuery = req.query;
-    console.log(searchQuery)
+    try {
+        const searchQuery = req.query.search ? {
+            $or: [
+                { name: { $regex: req.query.search, $options: "i" } },
+                { email: { $regex: req.query.search, $options: "i" } }
+            ]
+        } : {};
+        const users = await UserModel.find(searchQuery).find({ _id: { $ne: req.user._id } });
+        res.status(200).send(users);
+    } catch (error) {
+        res.status(404).json({ error: error.message })
+        throw new Error(error.message);
+    }
+
 })
 module.exports = { registerUser, authenticateUser, allUsers };
 
