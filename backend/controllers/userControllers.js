@@ -3,7 +3,7 @@ const UserModel = require("../models/userModel")
 const generateToken = require("../config/generateToken");
 const authMiddleware = require("../middleware/authMiddleware");
 
-const registerUser = expressAsyncHandler(authMiddleware, async (req, res) => {
+const registerUser = expressAsyncHandler(async (req, res) => {
     const { name, email, password, profilePicture } = req.body;
 
     try {

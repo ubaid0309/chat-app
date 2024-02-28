@@ -14,7 +14,7 @@ import { cloud_name, upload_preset_name } from "../constant/constant";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { error } from "console";
+
 const CLOUDINARY_API_KEY = import.meta.env.CLOUDINARY_API_KEY;
 const Login = () => {
   const [activeForm, setActiveForm] = useState("sign-in");
