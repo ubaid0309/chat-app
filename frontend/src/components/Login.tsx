@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const CLOUDINARY_API_KEY = import.meta.env.CLOUDINARY_API_KEY;
+
 const Login = () => {
   const [activeForm, setActiveForm] = useState("sign-in");
   const [email, setEmail] = useState("");
@@ -25,7 +26,6 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const navigate = useNavigate();
-
   //eslint-disable-next-line
   const submitHandler = async function (e: any, formType: string) {
     e.preventDefault();
@@ -114,7 +114,7 @@ const Login = () => {
     }
   }
   return (
-    <div className="login flex justify-center items-center h-full w-full ">
+    <div className="login login-body flex justify-center items-center h-full w-full ">
       <div className="relative login-container flex rounded-xl  bg-[#edf6f9] w-[60%] shadow-md ">
         <div className="left-side w-[50%] max-md:hidden">
           <img

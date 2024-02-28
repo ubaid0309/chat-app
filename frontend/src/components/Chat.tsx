@@ -1,16 +1,15 @@
-import axios from "axios";
-import { useEffect } from "react";
+import ChatHeader from "./ChatHeader";
 
 const Chat = () => {
-  async function getChats() {
-    const chats = await axios.get("http://localhost:5000/api/chat");
-    console.log(chats.data);
-  }
-  useEffect(() => {
-    getChats();
-  }, []);
+  return (
+    <div className="h-screen w-screen">
+      <div className="flex flex-col">
+        <ChatHeader />
 
-  return <div>Chat</div>;
+        <div className="flex w-full"></div>
+      </div>
+    </div>
+  );
 };
 
 export default Chat;

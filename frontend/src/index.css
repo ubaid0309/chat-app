@@ -70,6 +70,10 @@
 }
 
 body {
+  height: 100vh;
+}
+
+.login-body {
   background: hsla(0, 0%, 96%, 1);
 
   background: linear-gradient(
@@ -99,6 +103,9 @@ body {
     @apply border-border;
   }
   body {
+    @apply bg-background text-foreground;
+  }
+  .login-body {
     @apply bg-background text-foreground;
   }
 }
