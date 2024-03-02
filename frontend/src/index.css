@@ -73,6 +73,10 @@ body {
   height: 100vh;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .login-body {
   background: hsla(0, 0%, 96%, 1);
 

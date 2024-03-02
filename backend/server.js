@@ -8,11 +8,7 @@ const chatRoutes = require("./routes/chatRoutes");
 const PORT = process.env.REACT_APP_PORT || 5000;
 connectToDatabase();
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-  })
-);
+app.use(cors()); // Allow requests from all origins
 
 app.use(express.json());
 

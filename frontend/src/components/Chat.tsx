@@ -1,4 +1,6 @@
+import ChatBox from "./ChatBox";
 import ChatHeader from "./ChatHeader";
+import UserChats from "./UserChats";
 
 const Chat = () => {
   return (
@@ -6,7 +8,10 @@ const Chat = () => {
       <div className="flex flex-col">
         <ChatHeader />
 
-        <div className="flex w-full"></div>
+        <div className="flex w-full h-[90vh]">
+          <UserChats />
+          <ChatBox />
+        </div>
       </div>
     </div>
   );

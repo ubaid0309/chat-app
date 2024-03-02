@@ -86,7 +86,7 @@ const allUsers = expressAsyncHandler(async (req, res) => {
             ]
         } : {};
         const users = await UserModel.find(searchQuery).find({ _id: { $ne: req.user._id } });
-        res.status(200).send(users);
+        res.status(200).json(users);
     } catch (error) {
         res.status(404).json({ error: error.message })
         throw new Error(error.message);

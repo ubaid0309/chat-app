@@ -51,7 +51,9 @@ const Login = () => {
       }
     } else {
       if (password !== confirmPassword) {
-        toast.error("Password does not match");
+        toast.error("Password does not match", {
+          position: "top-left",
+        });
         return;
       }
 
