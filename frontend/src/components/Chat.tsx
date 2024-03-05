@@ -1,8 +1,38 @@
+import { useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import ChatBox from "./ChatBox";
 import ChatHeader from "./ChatHeader";
 import UserChats from "./UserChats";
+import { useEffect } from "react";
+import { setUserData } from "@/redux/slice/userSlice";
+
+interface UserInfoType {
+  id: string;
+  name: string;
+  email: string;
+  profilePicture: string;
+  token: string;
+}
 
 const Chat = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("use effect called");
+    const userInfo: UserInfoType = JSON.parse(
+      localStorage.getItem("userInfo")!
+    );
+    if (!userInfo) {
+      navigate("/");
+    }
+    console.log(userInfo);
+    dispatch(setUserData(userInfo));
+
+    console.log("rederred");
+  }, [location, location.pathname]);
+
   return (
     <div className="h-screen w-screen">
       <div className="flex flex-col">

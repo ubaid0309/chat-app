@@ -24,7 +24,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IoIosNotifications } from "react-icons/io";
 // import { IoClose } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
@@ -37,7 +36,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import ChatLoadingSkeleton from "./ChatLoadingSkeleton";
 import UserList from "./UserList";
-import { config } from "process";
+import UserAvatar from "./UserAvatar";
 
 const ChatHeader = () => {
   const loggedUser = useSelector((state: any) => state.user.userInfo);
@@ -58,6 +57,7 @@ const ChatHeader = () => {
   const getSearchResults = async () => {
     if (!search) {
       toast.warn("Enter name or email");
+      return;
     }
 
     const config = {
@@ -159,10 +159,10 @@ const ChatHeader = () => {
           <Menubar className="border-none ">
             <MenubarMenu>
               <MenubarTrigger className="text-gray-200 px-2 py-4 ">
-                <Avatar>
-                  <AvatarImage src={loggedUser?.profilePicture} alt="@shadcn" />
-                  <AvatarFallback>{loggedUser?.name}</AvatarFallback>
-                </Avatar>
+                <UserAvatar
+                  profilePicture={loggedUser?.profilePicture}
+                  name={loggedUser?.name}
+                />
               </MenubarTrigger>
               <MenubarContent className="text-lg font-normal font-poppins">
                 <MenubarItem asChild>
@@ -171,16 +171,16 @@ const ChatHeader = () => {
                     <DialogContent>
                       <DialogHeader className="flex flex-col gap-2 justify-center items-center">
                         <DialogTitle className="text-xl">
-                          {loggedUser.name}
+                          {loggedUser?.name}
                         </DialogTitle>
                         <DialogDescription className="flex flex-col gap-2 justify-center items-center">
                           <img
                             className="w-[20%]"
-                            src={loggedUser.profilePicture}
+                            src={loggedUser?.profilePicture}
                             alt=""
                           />
                           <p className="text-3xl text-black">
-                            Email : {loggedUser.email}
+                            Email : {loggedUser?.email}
                           </p>
                         </DialogDescription>
                       </DialogHeader>
