@@ -34,7 +34,7 @@ const Chat = () => {
       <div className="flex flex-col">
         <ChatHeader />
 
-        <div className="flex w-full h-[90vh]">
+        <div className="flex gap-4 w-full h-[90vh]">
           <UserChats />
           <ChatBox />
         </div>

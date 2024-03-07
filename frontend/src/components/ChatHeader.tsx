@@ -28,7 +28,6 @@ import { IoIosNotifications } from "react-icons/io";
 // import { IoClose } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import { Input } from "./ui/input";
-import { RiChatSmile2Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -37,8 +36,15 @@ import axios from "axios";
 import ChatLoadingSkeleton from "./ChatLoadingSkeleton";
 import UserList from "./UserList";
 import UserAvatar from "./UserAvatar";
-import { removeUserData, setSelectedChat } from "@/redux/slice/userSlice";
+import {
+  removeUserData,
+  setSelectedChat,
+  setUserChats,
+} from "@/redux/slice/userSlice";
 import { UserInfoType } from "@/types";
+import Lottie from "react-lottie";
+import animationData from "../animation/chat-bubble.json";
+import { animationConfig } from "@/config/animationConfig";
 
 const ChatHeader = () => {
   const loggedUser = useSelector((state: any) => state.user.userInfo);
@@ -47,6 +53,9 @@ const ChatHeader = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const userChats = useSelector((state: any) => state.user.userChats);
+  const config = animationConfig(animationData);
+
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     dispatch(removeUserData());
@@ -73,7 +82,7 @@ const ChatHeader = () => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `http://localhost:5000/api/user?search=${search}`,
+        `https://chat-app-ydlm.onrender.com/api/user?search=${search}`,
         config
       );
 
@@ -99,9 +108,15 @@ const ChatHeader = () => {
         config
       );
 
+      console.log(data);
+
+      if (!userChats.find((chat) => chat._id === data._id)) {
+        dispatch(setUserChats([data, ...userChats]));
+      }
+
       dispatch(setSelectedChat(data));
     } catch (error: any) {
-      console.log(error.message);
+      toast.error(error.message);
     }
   };
   return (
@@ -134,7 +149,7 @@ const ChatHeader = () => {
               {loading ? (
                 <ChatLoadingSkeleton />
               ) : (
-                <div>
+                <div className="flex flex-col gap-2 overflow-y-scroll">
                   {searchResult?.map((result: UserInfoType, index) => (
                     <UserList
                       key={index}
@@ -150,7 +165,7 @@ const ChatHeader = () => {
       </div>
 
       <div className="flex gap-3 justify-center items-center">
-        <RiChatSmile2Line className="text-yellow-400 text-4xl" />
+        <Lottie options={config} width={80} height={80} />
         <p>Chat Application</p>
       </div>
 
