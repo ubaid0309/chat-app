@@ -94,7 +94,7 @@ const ChatHeader = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/chat",
+        "https://chat-app-ydlm.onrender.com/api/chat",
         { userId },
         config
       );

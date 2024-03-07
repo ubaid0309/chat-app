@@ -13,7 +13,9 @@ app.use(cors()); // Allow requests from all origins
 app.use(express.json());
 
 
-
+app.get("/", (req, res) => {
+    res.send("API running successfully")
+})
 app.use("/api/user", userRoutes)
 app.use("/api/chat", chatRoutes);
 

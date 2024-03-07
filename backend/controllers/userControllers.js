@@ -8,14 +8,14 @@ const registerUser = expressAsyncHandler(async (req, res) => {
 
     try {
         if (!name || !email || !password) {
-            res.status(400);
+            res.status(400).json({ message: "Please provide all the required fields" });
             throw new Error("Please enter all the details required")
         }
 
         const userExist = await UserModel.findOne({ email })
 
         if (userExist) {
-            res.status(400);
+            res.status(400).json({ message: "User with this mail aleready exists" });
             throw new Error("User with this email already exists")
         }
 
@@ -67,7 +67,7 @@ const authenticateUser = expressAsyncHandler(async (req, res) => {
         }
 
         else {
-            res.status(401)
+            res.status(401).json({ message: "Invaild email or password" })
             throw new Error("Invalid email or password")
         }
     }

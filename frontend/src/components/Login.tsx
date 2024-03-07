@@ -37,10 +37,11 @@ const Login = () => {
           },
         };
         const { data } = await axios.post(
-          "http://localhost:5000/api/user/login",
+          "https://chat-app-ydlm.onrender.com/api/user/login",
           { email, password },
           config
         );
+        console.log(data);
         localStorage.setItem("userInfo", JSON.stringify(data));
         toast.success("Login Successful ");
         navigate("/chats");
@@ -64,10 +65,11 @@ const Login = () => {
           },
         };
         const { data } = await axios.post(
-          "http://localhost:5000/api/user",
+          "https://chat-app-ydlm.onrender.com/api/user",
           { name, email, password, profilePicture },
           config
         );
+        console.log(data);
         localStorage.setItem("userInfo", JSON.stringify(data));
         toast.success("Registration Successfully");
         navigate("/chats");
