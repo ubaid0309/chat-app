@@ -6,7 +6,7 @@ import UserChats from "./UserChats";
 import { useEffect } from "react";
 import { setUserData } from "@/redux/slice/userSlice";
 
-interface UserInfoType {
+export interface UserInfoType {
   id: string;
   name: string;
   email: string;
@@ -20,17 +20,13 @@ const Chat = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("use effect called");
     const userInfo: UserInfoType = JSON.parse(
       localStorage.getItem("userInfo")!
     );
     if (!userInfo) {
       navigate("/");
     }
-    console.log(userInfo);
     dispatch(setUserData(userInfo));
-
-    console.log("rederred");
   }, [location, location.pathname]);
 
   return (

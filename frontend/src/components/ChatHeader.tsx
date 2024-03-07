@@ -29,7 +29,7 @@ import { IoIosNotifications } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { Input } from "./ui/input";
 import { RiChatSmile2Line } from "react-icons/ri";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -37,6 +37,8 @@ import axios from "axios";
 import ChatLoadingSkeleton from "./ChatLoadingSkeleton";
 import UserList from "./UserList";
 import UserAvatar from "./UserAvatar";
+import { removeUserData, setSelectedChat } from "@/redux/slice/userSlice";
+import { UserInfoType } from "@/types";
 
 const ChatHeader = () => {
   const loggedUser = useSelector((state: any) => state.user.userInfo);
@@ -44,9 +46,10 @@ const ChatHeader = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const dispatch = useDispatch();
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
+    dispatch(removeUserData());
     navigate("/");
   };
 
@@ -75,7 +78,6 @@ const ChatHeader = () => {
       );
 
       setSearchResult(data);
-      console.log(data);
       setLoading(false);
     } catch (error: any) {
       console.log(error.message);
@@ -96,6 +98,8 @@ const ChatHeader = () => {
         { userId },
         config
       );
+
+      dispatch(setSelectedChat(data));
     } catch (error: any) {
       console.log(error.message);
     }
@@ -131,11 +135,11 @@ const ChatHeader = () => {
                 <ChatLoadingSkeleton />
               ) : (
                 <div>
-                  {searchResult?.map((result, index) => (
+                  {searchResult?.map((result: UserInfoType, index) => (
                     <UserList
                       key={index}
                       user={result}
-                      handleFunction={() => accessChat(result_id)}
+                      handleFunction={() => accessChat(result?._id)}
                     />
                   ))}
                 </div>

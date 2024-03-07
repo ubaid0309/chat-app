@@ -31,7 +31,7 @@ const accesChat = expressAsyncHandler(async (req, res) => {
 
     else {
         const chatData = {
-            chatName: "Test Chat",
+            chatName: "sender",
             isGroupChat: false,
             users: [req.user._id, userId]
         };
