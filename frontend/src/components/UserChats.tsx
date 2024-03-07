@@ -7,8 +7,10 @@ import { Button } from "./ui/button";
 import { IoIosAdd } from "react-icons/io";
 import UserChatCard from "./UserChatCard";
 const UserChats = () => {
+  //eslint-disable-next-line
   const loggedUser = useSelector((state: any) => state.user.userInfo);
   const dispatch = useDispatch();
+  //eslint-disable-next-line
   const userChats = useSelector((state: any) => state.user.userChats);
   const fetchUserChats = async () => {
     const config = {
@@ -24,7 +26,8 @@ const UserChats = () => {
       );
 
       dispatch(setUserChats(data));
-    } catch (error) {
+      //eslint-disable-next-line
+    } catch (error: any) {
       toast.error(error.message);
     }
   };
@@ -48,9 +51,12 @@ const UserChats = () => {
       </div>
       {userChats && (
         <div className="flex flex-col gap-2">
-          {userChats.map((chat) => (
-            <UserChatCard chat={chat} key={chat._id} />
-          ))}
+          {userChats.map(
+            //eslint-disable-next-line
+            (chat: any) => (
+              <UserChatCard chat={chat} key={chat._id} />
+            )
+          )}
         </div>
       )}
     </div>

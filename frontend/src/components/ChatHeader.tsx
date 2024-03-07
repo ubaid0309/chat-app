@@ -42,11 +42,14 @@ import {
   setUserChats,
 } from "@/redux/slice/userSlice";
 import { UserInfoType } from "@/types";
+//eslint-disable-next-line
 import Lottie from "react-lottie";
 import animationData from "../animation/chat-bubble.json";
 import { animationConfig } from "@/config/animationConfig";
+import { any } from "prop-types";
 
 const ChatHeader = () => {
+  //eslint-disable-next-line
   const loggedUser = useSelector((state: any) => state.user.userInfo);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
@@ -88,6 +91,7 @@ const ChatHeader = () => {
 
       setSearchResult(data);
       setLoading(false);
+      //eslint-disable-next-line
     } catch (error: any) {
       console.log(error.message);
     }
@@ -115,6 +119,7 @@ const ChatHeader = () => {
       }
 
       dispatch(setSelectedChat(data));
+      //eslint-disable-next-line
     } catch (error: any) {
       toast.error(error.message);
     }
