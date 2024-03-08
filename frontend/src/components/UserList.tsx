@@ -4,7 +4,7 @@ const UserList = ({ user, handleFunction }) => {
   return (
     <div
       onClick={handleFunction}
-      className="flex justify-start items-center rounded-md p-2  gap-3 cursor-pointer text-black hover:bg-[#BDD358] bg-[#F9E7E7] hover:text-[#FEFAE0] transition-all duration-100"
+      className="flex justify-start items-center  w-full rounded-md p-2  gap-3 cursor-pointer text-black hover:bg-[#BDD358] bg-[#F9E7E7] hover:text-[#FEFAE0] transition-all duration-100"
     >
       <Avatar>
         <AvatarImage src={user?.profilePicture} alt="@shadcn" />

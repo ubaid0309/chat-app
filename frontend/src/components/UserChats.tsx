@@ -13,7 +13,8 @@ const UserChats = () => {
   const dispatch = useDispatch();
   //eslint-disable-next-line
   const userChats = useSelector((state: any) => state.user.userChats);
-
+  //eslint-disable-next-line
+  const selectedChat = useSelector((state: any) => state.user.selectedChat);
   const fetchUserChats = async () => {
     const config = {
       headers: {
@@ -40,14 +41,18 @@ const UserChats = () => {
 
   return (
     <div
-      className={`w-[35%] border border-[#F9E7E7]  rounded-lg flex flex-col gap-4 py-2 px-2`}
+      className={`${
+        Object.keys(selectedChat).length > 0
+          ? "max-md:hidden"
+          : "max-md:flex max-md:flex-col max-md:w-full"
+      }  w-[35%] border border-[#F9E7E7]  rounded-lg flex flex-col gap-4 py-2 px-2`}
     >
-      <div
-        className={`flex flex-col lg:flex-row justify-between items-center px-6 py-2`}
-      >
-        <p className="font-poppins text-2xl font-medium">My Chats</p>
+      <div className={`flex   justify-between items-center px-6 py-2`}>
+        <p className="font-poppins text-base lg:text-2xl font-medium">
+          My Chats
+        </p>
 
-        <Button className="flex justify-between items-center gap-2 max-md:w-[100%]">
+        <Button className="flex justify-between items-center gap-2 w-fit">
           <MyDialog trigger="New Group Chat  ">
             <div>Enter group name</div>
           </MyDialog>
