@@ -1,5 +1,6 @@
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -14,15 +15,6 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 import { IoIosNotifications } from "react-icons/io";
 // import { IoClose } from "react-icons/io5";
@@ -46,7 +38,7 @@ import { UserInfoType } from "@/types";
 import Lottie from "react-lottie";
 import animationData from "../animation/chat-bubble.json";
 import { animationConfig } from "@/config/animationConfig";
-import { any } from "prop-types";
+import MyDialog from "./MyDialog";
 
 const ChatHeader = () => {
   //eslint-disable-next-line
@@ -56,6 +48,7 @@ const ChatHeader = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  //eslint-disable-next-line
   const userChats = useSelector((state: any) => state.user.userChats);
   const config = animationConfig(animationData);
 
@@ -112,11 +105,12 @@ const ChatHeader = () => {
         config
       );
 
-      console.log(data);
-
-      if (!userChats.find((chat) => chat._id === data._id)) {
+      //eslint-disable-next-line
+      if (!userChats.find((chat: any) => chat._id === data._id)) {
         dispatch(setUserChats([data, ...userChats]));
       }
+
+      toast.success(`Chat created with ${data?.users[1]?.name}`);
 
       dispatch(setSelectedChat(data));
       //eslint-disable-next-line
@@ -154,7 +148,7 @@ const ChatHeader = () => {
               {loading ? (
                 <ChatLoadingSkeleton />
               ) : (
-                <div className="flex flex-col gap-2 overflow-y-scroll">
+                <SheetClose className="flex flex-col gap-2 overflow-y-scroll">
                   {searchResult?.map((result: UserInfoType, index) => (
                     <UserList
                       key={index}
@@ -162,7 +156,7 @@ const ChatHeader = () => {
                       handleFunction={() => accessChat(result?._id)}
                     />
                   ))}
-                </div>
+                </SheetClose>
               )}
             </SheetDescription>
           </SheetContent>
@@ -190,29 +184,30 @@ const ChatHeader = () => {
               </MenubarTrigger>
               <MenubarContent className="text-lg font-normal font-poppins">
                 <MenubarItem asChild>
-                  <Dialog>
-                    <DialogTrigger>Profile</DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader className="flex flex-col gap-2 justify-center items-center">
-                        <DialogTitle className="text-xl">
-                          {loggedUser?.name}
-                        </DialogTitle>
-                        <DialogDescription className="flex flex-col gap-2 justify-center items-center">
-                          <img
-                            className="w-[20%]"
-                            src={loggedUser?.profilePicture}
-                            alt=""
-                          />
-                          <p className="text-3xl text-black">
-                            Email : {loggedUser?.email}
-                          </p>
-                        </DialogDescription>
-                      </DialogHeader>
-                    </DialogContent>
-                  </Dialog>
+                  <MyDialog trigger="Profile">
+                    <div className="flex flex-col gap-2 justify-center items-center">
+                      <p className="dialog-title text-xl">{loggedUser?.name}</p>
+                      <div className="flex flex-col gap-2 justify-center items-center">
+                        <img
+                          className="w-[20%]"
+                          src={loggedUser?.profilePicture}
+                          alt=""
+                        />
+                        <p className="text-3xl text-black">
+                          Email : {loggedUser?.email}
+                        </p>
+                      </div>
+                    </div>
+                  </MyDialog>
                 </MenubarItem>
                 <MenubarSeparator />
-                <MenubarItem onClick={logoutHandler}>Logout</MenubarItem>
+                <MenubarItem
+                  asChild
+                  onClick={logoutHandler}
+                  className="p-0 font-normal text-base"
+                >
+                  <p>Logout</p>
+                </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
