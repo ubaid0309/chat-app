@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import ChatPanel from "./ChatPanel";
 
 const ChatBox = () => {
   //eslint-disable-next-line
@@ -11,7 +12,7 @@ const ChatBox = () => {
           : "max-md:hidden"
       } md:w-[60%]  border border-[#F9E7E7]  rounded-lg md:flex md:flex-col gap-4 py-2 px-2`}
     >
-      ChatBox
+      <ChatPanel />
     </div>
   );
 };
