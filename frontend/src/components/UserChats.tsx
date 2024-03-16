@@ -119,6 +119,7 @@ const UserChats = () => {
     }
 
     setSelectedUsers([...selectedUsers, user]);
+    setSearchUsers("");
   };
 
   const handleRemoveUser = (user: UserInfoType): void => {
