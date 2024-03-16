@@ -1,6 +1,6 @@
 import { Avatar, AvatarImage } from "./ui/avatar";
 //eslint-disable-next-line
-const UserList = ({ user, handleFunction }) => {
+const UserList = ({ user, handleFunction }: any) => {
   return (
     <div
       onClick={handleFunction}

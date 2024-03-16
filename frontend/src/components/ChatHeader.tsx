@@ -39,6 +39,9 @@ import Lottie from "react-lottie";
 import animationData from "../animation/chat-bubble.json";
 import { animationConfig } from "@/config/animationConfig";
 import MyDialog from "./MyDialog";
+import { FaEye } from "react-icons/fa";
+import { Button } from "./ui/button";
+import { FcMenu } from "react-icons/fc";
 
 const ChatHeader = () => {
   //eslint-disable-next-line
@@ -122,7 +125,13 @@ const ChatHeader = () => {
     <div className="flex w-screen px-6 py-2 justify-between items-center">
       <div className="sheet">
         <Sheet>
-          <SheetTrigger className="">Open</SheetTrigger>
+          <SheetTrigger className="flex justify-center items-center gap-2 ">
+            <FcMenu className="text-xl" />{" "}
+            <span className="max-md:hidden font-poppins font-medium">
+              {" "}
+              Search User
+            </span>
+          </SheetTrigger>
           <SheetContent
             side={"left"}
             className="flex flex-col gap-4 text-black font-poppins"
@@ -137,12 +146,12 @@ const ChatHeader = () => {
                   onChange={searchHandler}
                 />
               </div>
-              <button
+              <Button
                 onClick={getSearchResults}
                 className="hover:bg-black hover:text-white transition-all duration-500 rounded-md px-2 py-2 "
               >
                 Search
-              </button>
+              </Button>
             </SheetHeader>
             <SheetDescription asChild>
               {loading ? (

@@ -14,7 +14,7 @@ import { UserInfoType } from "@/types";
 
 const UserChats = () => {
   //eslint-disable-next-line
-  const loggedUser = useSelector((state: any) => state.user.userInfo);
+  const loggedUser = JSON.parse(localStorage.getItem("userInfo")!);
   const dispatch = useDispatch();
   //eslint-disable-next-line
   const userChats = useSelector((state: any) => state.user.userChats);
@@ -26,7 +26,11 @@ const UserChats = () => {
   const [searchUsersResult, setSearchUsersResult] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const fetchAgain = useSelector((state: any) => state.user.fetchAgain);
+  const [userChatLoading, setUserChatLoading] = useState(false);
+
   const fetchUserChats = async () => {
+    console.log("inside fetchUserChats");
     const config = {
       headers: {
         Authorization: `Bearer ${loggedUser.token}`,
@@ -34,12 +38,15 @@ const UserChats = () => {
     };
 
     try {
+      setUserChatLoading(true);
+
       const { data } = await axios.get(
         "https://chat-app-ydlm.onrender.com/api/chat",
         config
       );
 
       dispatch(setUserChats(data));
+      setUserChatLoading(false);
       //eslint-disable-next-line
     } catch (error: any) {
       toast.error(error.message);
@@ -124,7 +131,7 @@ const UserChats = () => {
 
   useEffect(() => {
     fetchUserChats();
-  }, []);
+  }, [fetchAgain]);
 
   return (
     <div
@@ -194,11 +201,17 @@ const UserChats = () => {
       </div>
       {userChats && (
         <div className="flex flex-col gap-2">
-          {userChats.map(
-            //eslint-disable-next-line
-            (chat: any) => (
-              <UserChatCard chat={chat} key={chat._id} />
-            )
+          {userChatLoading ? (
+            <ChatLoadingSkeleton />
+          ) : (
+            <>
+              {userChats.map(
+                //eslint-disable-next-line
+                (chat: any) => (
+                  <UserChatCard chat={chat} key={chat._id} />
+                )
+              )}
+            </>
           )}
         </div>
       )}

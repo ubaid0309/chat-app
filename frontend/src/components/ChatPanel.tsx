@@ -4,15 +4,16 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { Button } from "./ui/button";
 import { setSelectedChat } from "@/redux/slice/userSlice";
 import { getSender, getSenderFullDeatils } from "@/config/ChatLogics";
-import MyDialog from "./MyDialog";
 import animationData from "../animation/chat-cat.json";
 import { animationConfig } from "@/config/animationConfig";
 import SenderDialog from "./SenderDialog";
+import UdateGroupModal from "./UdateGroupModal";
 
 const ChatPanel = () => {
   const dispatch = useDispatch();
   //eslint-disable-next-line
   const selectedChat = useSelector((state: any) => state.user.selectedChat);
+  //eslint-disable-next-line
   const loggedUser = useSelector((state: any) => state.user.userInfo);
 
   const animConfig = animationConfig(animationData);
@@ -20,7 +21,7 @@ const ChatPanel = () => {
   return (
     <>
       {Object.keys(selectedChat).length > 0 ? (
-        <div className="flex justify-between items-center px-6 py-2">
+        <div className="flex justify-between items-center px-6 py-2 gap-4">
           <Button
             className="md:hidden"
             onClick={() => dispatch(setSelectedChat({}))}
@@ -29,8 +30,10 @@ const ChatPanel = () => {
           </Button>
 
           {selectedChat.isGroupChat ? (
-            <div className="font-poppins font-medium text-lg md:text-2xl">
-              <p>{selectedChat.chatName}</p>
+            <div className="font-poppins font-medium text-lg md:text-2xl flex w-full justify-between items-center">
+              <p>{selectedChat.chatName.toUpperCase()}</p>
+
+              <UdateGroupModal />
             </div>
           ) : (
             <div className="font-poppins font-medium text-lg md:text-2xl flex w-full justify-between items-center">

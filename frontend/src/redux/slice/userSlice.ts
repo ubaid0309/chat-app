@@ -6,6 +6,7 @@ export const userSlice = createSlice({
     userInfo: JSON.parse(localStorage.getItem("userInfo")!),
     selectedChat: {},
     userChats: [],
+    fetchAgain: false,
   },
   reducers: {
     setUserData: (state, action) => {
@@ -23,9 +24,17 @@ export const userSlice = createSlice({
     setUserChats: (state, action) => {
       state.userChats = action.payload;
     },
+    setFetchAgain: (state, action) => {
+      state.fetchAgain = action.payload;
+    },
   },
 });
 
-export const { setUserData, removeUserData, setSelectedChat, setUserChats } =
-  userSlice.actions;
+export const {
+  setUserData,
+  removeUserData,
+  setSelectedChat,
+  setUserChats,
+  setFetchAgain,
+} = userSlice.actions;
 export default userSlice.reducer;
