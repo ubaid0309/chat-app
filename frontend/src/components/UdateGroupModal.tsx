@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { setFetchAgain, setSelectedChat } from "@/redux/slice/userSlice";
 
-const UdateGroupModal = () => {
+const UdateGroupModal = ({ fetchMessages }) => {
   const dispatch = useDispatch();
   //eslint-disable-next-line
   const selectedChat = useSelector((state: any) => state.user.selectedChat);
@@ -56,7 +56,7 @@ const UdateGroupModal = () => {
 
       //eslint-disable-next-line
     } catch (error: any) {
-      console.log(error.message);
+      console.log(error.response.data.message);
     }
   };
 
@@ -91,8 +91,9 @@ const UdateGroupModal = () => {
         ? dispatch(setSelectedChat({}))
         : dispatch(setSelectedChat(data));
       dispatch(setFetchAgain(!fetchAgain));
+      fetchMessages();
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -125,7 +126,7 @@ const UdateGroupModal = () => {
         config
       );
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
     }
     dispatch(setFetchAgain(!fetchAgain));
     dispatch(setSelectedChat(data));
@@ -160,7 +161,7 @@ const UdateGroupModal = () => {
       dispatch(setSelectedChat(data));
       setGroupChatName("");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
       setGroupChatName("");
     }
   };

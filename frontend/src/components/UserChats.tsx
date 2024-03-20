@@ -49,7 +49,7 @@ const UserChats = () => {
       setUserChatLoading(false);
       //eslint-disable-next-line
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -106,7 +106,7 @@ const UserChats = () => {
       dispatch(setUserChats([data, ...userChats]));
       toast.success("Group chat created successfully");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
     }
   };
   //eslint-disable-next-line

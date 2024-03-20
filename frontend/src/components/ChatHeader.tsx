@@ -39,7 +39,7 @@ import Lottie from "react-lottie";
 import animationData from "../animation/chat-bubble.json";
 import { animationConfig } from "@/config/animationConfig";
 import MyDialog from "./MyDialog";
-import { FaEye } from "react-icons/fa";
+
 import { Button } from "./ui/button";
 import { FcMenu } from "react-icons/fc";
 
@@ -89,7 +89,7 @@ const ChatHeader = () => {
       setLoading(false);
       //eslint-disable-next-line
     } catch (error: any) {
-      console.log(error.message);
+      console.log(error.response.data.message);
     }
   };
 
@@ -118,7 +118,7 @@ const ChatHeader = () => {
       dispatch(setSelectedChat(data));
       //eslint-disable-next-line
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
     }
   };
   return (
@@ -194,11 +194,13 @@ const ChatHeader = () => {
               <MenubarContent className="text-lg font-normal font-poppins">
                 <MenubarItem asChild>
                   <MyDialog trigger="Profile">
-                    <div className="flex flex-col gap-2 justify-center items-center">
-                      <p className="dialog-title text-xl">{loggedUser?.name}</p>
-                      <div className="flex flex-col gap-2 justify-center items-center">
+                    <div className="flex flex-col gap-2 justify-center items-center font-poppins">
+                      <p className="dialog-title text-xl font-medium">
+                        {loggedUser?.name}
+                      </p>
+                      <div className="flex flex-col gap-2 justify-center items-center ">
                         <img
-                          className="w-[20%]"
+                          className="w-[20%] rounded-full"
                           src={loggedUser?.profilePicture}
                           alt=""
                         />

@@ -4,14 +4,14 @@ import React from "react";
 
 interface UserAvatarProps {
   profilePicture: string;
-  name: string;
+  name?: string;
 }
 
 const UserAvatar = ({ profilePicture, name }: UserAvatarProps) => {
   return (
     <Avatar>
       <AvatarImage src={profilePicture} alt="@shadcn" />
-      <AvatarFallback>{name}</AvatarFallback>
+      {name && <AvatarFallback>{name}</AvatarFallback>}
     </Avatar>
   );
 };

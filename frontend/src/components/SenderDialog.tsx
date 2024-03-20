@@ -15,10 +15,14 @@ const SenderDialog = ({ user }: SenderDialogProps) => {
           <FaEye />
         </Button>
       </DialogTrigger>
-      <DialogContent className="flex flex-col gap-2 justify-center items-center">
+      <DialogContent className="flex flex-col gap-2 justify-center items-center font-poppins">
         <div className="flex flex-col gap-2 justify-center items-center">
-          <p className="dialog-title text-xl">{user?.name}</p>
-          <img className="w-[20%]" src={user?.profilePicture} alt="" />
+          <p className="dialog-title text-xl font-medium">{user?.name}</p>
+          <img
+            className="w-[20%] rounded-full"
+            src={user?.profilePicture}
+            alt=""
+          />
           <p className="text-3xl text-black">Email : {user?.email}</p>
         </div>
       </DialogContent>

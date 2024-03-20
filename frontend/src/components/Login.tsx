@@ -14,6 +14,7 @@ import { cloud_name, upload_preset_name } from "../constant/constant";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { error } from "console";
 
 const CLOUDINARY_API_KEY = import.meta.env.CLOUDINARY_API_KEY;
 
@@ -41,14 +42,13 @@ const Login = () => {
           { email, password },
           config
         );
-        console.log(data);
+
         localStorage.setItem("userInfo", JSON.stringify(data));
         toast.success("Login Successful ");
         navigate("/chats");
         //eslint-disable-next-line
       } catch (error: any) {
-        toast.error(error.message);
-        throw new Error(error.message);
+        toast.error(error.response.data.message);
       }
     } else {
       if (password !== confirmPassword) {
@@ -75,6 +75,7 @@ const Login = () => {
         navigate("/chats");
         //eslint-disable-next-line
       } catch (error: any) {
+        toast.error(error.response.data.message);
         throw new Error(error.message);
       }
     }
@@ -122,6 +123,7 @@ const Login = () => {
       <div className="relative login-container flex rounded-xl  bg-[#edf6f9] w-[60%] shadow-md ">
         <div className="left-side w-[50%] max-md:hidden">
           <img
+            loading="lazy"
             className="object-contain w-[100%] h-[100%]"
             src={PeopleChat}
             alt="three-people-chat"
