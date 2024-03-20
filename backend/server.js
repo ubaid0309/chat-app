@@ -5,6 +5,8 @@ const cors = require("cors");
 const connectToDatabase = require("./mongoose/connectToDatabase");
 const userRoutes = require("./routes/userRoutes")
 const chatRoutes = require("./routes/chatRoutes");
+const messageRoutes = require("./routes/messageRoutes");
+
 const PORT = process.env.REACT_APP_PORT;
 connectToDatabase();
 
@@ -18,6 +20,7 @@ app.get("/", (req, res) => {
 })
 app.use("/api/user", userRoutes)
 app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
 
 
 app.listen(5000, console.log(`listening on port  ${PORT}`));

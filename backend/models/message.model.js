@@ -1,4 +1,4 @@
-import { Schema, Types, model } from "mongoose";
+
 const mongoose = require("mongoose");
 // interface IMessageModel extends Document {
 //   sender: Types.ObjectId;
