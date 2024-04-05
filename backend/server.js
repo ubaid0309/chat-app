@@ -23,4 +23,46 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 
 
-app.listen(5000, console.log(`listening on port  ${PORT}`));
+const server = app.listen(5000, console.log(`listening on port  ${PORT}`));
+
+const io = require("socket.io")(server, {
+    pingTimeout: 60000,
+    cors: {
+        origin: "*"
+    }
+});
+
+io.on("connection", (socket) => {
+    console.log("connected to socket.io" + socket)
+
+    socket.on("setup", (userData) => {
+        socket.join(userData._id);
+        socket.emit("connected");
+    })
+
+    socket.on("join-chat", (roomId) => {
+        socket.join(roomId);
+        console.log("User joined room " + roomId)
+    })
+
+    socket.on("typing", (room) => socket.in(room).emit("typing"))
+    socket.on("stop-typing", (room) => socket.in(room).emit("stop-typing"))
+
+    socket.on("new-message", (message) => {
+        var chat = message.reciever;
+
+        if (!chat.users) return console.log("chat.users not defined")
+
+        chat.users.forEach(user => {
+            if (user._id == message.sender._id) return;
+            return socket.in(user._id).emit("message-recieved", message)
+
+        });
+
+    })
+
+    socket.off("setup", () => {
+        console.log("USER DISCONNECTED");
+        socket.leave(userData._id)
+    })
+})

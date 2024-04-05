@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { setSelectedChat } from "@/redux/slice/userSlice";
 import { getSender, getSenderFullDeatils } from "@/config/ChatLogics";
 import animationData from "../animation/chat-cat.json";
+import typingAnimationData from "../animation/typing.json";
 import { animationConfig } from "@/config/animationConfig";
 import SenderDialog from "./SenderDialog";
 import UdateGroupModal from "./UdateGroupModal";
@@ -14,9 +15,14 @@ import { Input } from "./ui/input";
 import { toast } from "react-toastify";
 import axios from "axios";
 import ScrollableChatFeed from "./ScrollableChatFeed";
+import { io } from "socket.io-client";
+const ENDPOINT = "https://chat-app-ydlm.onrender.com";
+
+let socket, selectedChatCompare;
 
 const ChatPanel = () => {
   const animConfig = animationConfig(animationData);
+  const typingAnimationConfig = animationConfig(typingAnimationData);
   const dispatch = useDispatch();
   //eslint-disable-next-line
   const selectedChat = useSelector((state: any) => state.user.selectedChat);
@@ -25,7 +31,9 @@ const ChatPanel = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -33,7 +41,7 @@ const ChatPanel = () => {
       toast.error("Messsage cannot  be empty");
       return;
     }
-
+    socket.emit("stop-typing", selectedChat._id);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +60,7 @@ const ChatPanel = () => {
         },
         config
       );
-
+      socket.emit("new-message", data);
       setMessages([...messages, data]);
       console.log(messages);
     } catch (error) {
@@ -82,14 +90,65 @@ const ChatPanel = () => {
       setMessages(data);
 
       setLoading(false);
+
+      socket.emit("join-chat", selectedChat._id);
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
   };
 
+  const typingHandler = (e) => {
+    setNewMessage(e.target.value);
+
+    if (!socketConnected) return;
+
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat._id);
+    }
+
+    const lastTypingTime = new Date().getTime();
+    const timerLength = 3000;
+    setTimeout(() => {
+      const timeNow = new Date().getTime();
+      const timeDiff = timeNow - lastTypingTime;
+
+      if (timeDiff >= timerLength && typing) {
+        socket.emit("stop-typing", selectedChat._id);
+        setTyping(false);
+      }
+    }, timerLength);
+  };
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", loggedUser);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.on("typing", () => setIsTyping(true));
+    socket.on("stop-typing", () => setIsTyping(false));
+  }, []);
+
   useEffect(() => {
     fetchMessages();
+    selectedChatCompare = selectedChat;
   }, [selectedChat]);
+
+  useEffect(() => {
+    socket.on("message-recieved", (newMessage) => {
+      console.log(newMessage);
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessage.reciever._id
+      ) {
+        //give notifications
+        console.log("insided notification");
+      } else {
+        console.log("messages set");
+        setMessages([...messages, newMessage]);
+      }
+    });
+  });
+
   return (
     <>
       {Object.keys(selectedChat).length > 0 ? (
@@ -132,10 +191,21 @@ const ChatPanel = () => {
           </div>
 
           <form onSubmit={submitHandler}>
+            {isTyping ? (
+              <div>
+                <Lottie
+                  options={typingAnimationConfig}
+                  style={{ backgroundColor: "transparent", marginLeft: 0 }}
+                  width={"60px"}
+                />
+              </div>
+            ) : (
+              <></>
+            )}
             <Input
               className="font-poppins border"
               placeholder="Enter a message"
-              onChange={(e) => setNewMessage(e.target.value)}
+              onChange={typingHandler}
               value={newMessage}
             />
           </form>
