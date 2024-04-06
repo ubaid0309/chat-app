@@ -11,6 +11,7 @@ import UserAvatar from "./UserAvatar";
 
 const ScrollableChatFeed = ({ messages }) => {
   const loggedUser = useSelector((state: any) => state.user.userInfo);
+
   return (
     <ScrollableFeed className="font-poppins">
       {console.log(messages)}
@@ -25,7 +26,7 @@ const ScrollableChatFeed = ({ messages }) => {
               />
             )}
             <span
-              className={`text-[#f9e7e7] rounded-xl font-poppins p-2 max-w-[75%] ${
+              className={`text-[#f9e7e7] rounded-xl font-poppins p-2 max-w-[75%]  ${
                 m.sender._id === loggedUser._id
                   ? "bg-[#ffc857]"
                   : "bg-[#0F172A]"

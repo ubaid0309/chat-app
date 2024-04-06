@@ -121,6 +121,10 @@ const ChatPanel = () => {
   };
 
   useEffect(() => {
+    if (!loggedUser) {
+      window.location.reload();
+      return;
+    }
     socket = io(ENDPOINT);
     socket.emit("setup", loggedUser);
     socket.on("connected", () => setSocketConnected(true));

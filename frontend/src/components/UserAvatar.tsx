@@ -5,12 +5,21 @@ import React from "react";
 interface UserAvatarProps {
   profilePicture: string;
   name?: string;
+  otherClasses?: string;
 }
 
-const UserAvatar = ({ profilePicture, name }: UserAvatarProps) => {
+const UserAvatar = ({
+  profilePicture,
+  name,
+  otherClasses,
+}: UserAvatarProps) => {
   return (
     <Avatar>
-      <AvatarImage src={profilePicture} alt="@shadcn" />
+      <AvatarImage
+        className={otherClasses ? `${otherClasses}` : ""}
+        src={profilePicture}
+        alt="@shadcn"
+      />
       {name && <AvatarFallback>{name}</AvatarFallback>}
     </Avatar>
   );

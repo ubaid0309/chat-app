@@ -14,7 +14,6 @@ import { cloud_name, upload_preset_name } from "../constant/constant";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { error } from "console";
 
 const CLOUDINARY_API_KEY = import.meta.env.CLOUDINARY_API_KEY;
 
@@ -48,7 +47,7 @@ const Login = () => {
         navigate("/chats");
         //eslint-disable-next-line
       } catch (error: any) {
-        toast.error(error.response.data.message);
+        toast.error(error?.response?.data?.message);
       }
     } else {
       if (password !== confirmPassword) {
