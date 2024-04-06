@@ -15,7 +15,7 @@ import { Input } from "./ui/input";
 import { toast } from "react-toastify";
 import axios from "axios";
 import ScrollableChatFeed from "./ScrollableChatFeed";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 const ENDPOINT = "https://chat-app-ydlm.onrender.com";
 
 let socket, selectedChatCompare;
