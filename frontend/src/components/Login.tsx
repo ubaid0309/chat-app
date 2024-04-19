@@ -41,10 +41,14 @@ const Login = () => {
           { email, password },
           config
         );
-
+        console.log(data);
         localStorage.setItem("userInfo", JSON.stringify(data));
         toast.success("Login Successful ");
-        navigate("/chats");
+        if (data) {
+          navigate("/chats");
+        } else {
+          toast.error("Faild to login");
+        }
         //eslint-disable-next-line
       } catch (error: any) {
         toast.error(error?.response?.data?.message);
@@ -71,7 +75,11 @@ const Login = () => {
         console.log(data);
         localStorage.setItem("userInfo", JSON.stringify(data));
         toast.success("Registration Successfully");
-        navigate("/chats");
+        if (data) {
+          navigate("/chats");
+        } else {
+          toast.error("Faild to sign up");
+        }
         //eslint-disable-next-line
       } catch (error: any) {
         toast.error(error.response.data.message);
