@@ -9,14 +9,14 @@ const registerUser = expressAsyncHandler(async (req, res) => {
     try {
         if (!name || !email || !password) {
             res.status(400).json({ message: "Please provide all the required fields" });
-            throw new Error("Please enter all the details required")
+
         }
 
         const userExist = await UserModel.findOne({ email })
 
         if (userExist) {
             res.status(400).json({ message: "User with this mail aleready exists" });
-            throw new Error("User with this email already exists")
+
         }
 
         const user = await UserModel.create({
@@ -38,13 +38,13 @@ const registerUser = expressAsyncHandler(async (req, res) => {
 
         else {
             res.status(400);
-            throw new Error("Failed to create user");
+
         }
     }
 
     catch (err) {
         res.status(404)
-        throw new Error(err)
+
     }
 })
 
@@ -67,12 +67,11 @@ const authenticateUser = expressAsyncHandler(async (req, res) => {
 
         else {
             res.status(401).json({ message: "Invaild email or password" })
-            throw new Error("Invalid email or password")
         }
     }
 
     catch (err) {
-        throw new Error(err.message)
+
     }
 })
 
@@ -88,7 +87,7 @@ const allUsers = expressAsyncHandler(async (req, res) => {
         res.status(200).json(users);
     } catch (error) {
         res.status(404).json({ error: error.message })
-        throw new Error(error.message);
+
     }
 
 })

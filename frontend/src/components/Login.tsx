@@ -75,7 +75,6 @@ const Login = () => {
         //eslint-disable-next-line
       } catch (error: any) {
         toast.error(error.response.data.message);
-        throw new Error(error.message);
       }
     }
   };
@@ -110,9 +109,7 @@ const Login = () => {
           .then((jsonResponse) =>
             setProfilePicture(jsonResponse.url.toString())
           );
-      } catch (err) {
-        throw new Error("Failed to upload profile picture");
-      }
+      } catch (err) {}
     } else {
       toast.error("Please select .png of .jpg files");
     }
