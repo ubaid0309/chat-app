@@ -124,13 +124,14 @@ const ChatPanel = () => {
     if (!loggedUser) {
       window.location.reload();
       return;
+    } else {
+      socket = io(ENDPOINT);
+      socket.emit("setup", loggedUser);
+      socket.on("connected", () => setSocketConnected(true));
+      socket.on("typing", () => setIsTyping(true));
+      socket.on("stop-typing", () => setIsTyping(false));
     }
-    socket = io(ENDPOINT);
-    socket.emit("setup", loggedUser);
-    socket.on("connected", () => setSocketConnected(true));
-    socket.on("typing", () => setIsTyping(true));
-    socket.on("stop-typing", () => setIsTyping(false));
-  }, []);
+  }, [loggedUser]);
 
   useEffect(() => {
     fetchMessages();
