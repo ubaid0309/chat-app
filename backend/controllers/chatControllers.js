@@ -42,7 +42,7 @@ const accesChat = expressAsyncHandler(async (req, res) => {
             res.status(200).json(fullChat);
         } catch (error) {
             res.status(404).json({ message: error.message });
-            console.log(err.message)
+            console.log(error.message)
         }
     }
 });
@@ -64,7 +64,7 @@ const fetchChat = expressAsyncHandler(async (req, res) => {
         res.status(200).json(userFullChats);
     } catch (error) {
         res.status(404).json({ message: error.message });
-        console.log(err.message)
+        console.log(error.message)
     }
 })
 
@@ -99,7 +99,7 @@ const createGroupChat = expressAsyncHandler(async (req, res) => {
 
     } catch (error) {
         res.status(400).json({ message: error.message })
-        console.log(err.message)
+        console.log(error.message)
     }
 })
 
@@ -121,7 +121,7 @@ const renameGroupChat = expressAsyncHandler(async (req, res) => {
 
     } catch (error) {
         res.status(400).json({ message: error.message });
-        console.log(err.message)
+        console.log(error.message)
     }
 })
 
@@ -155,7 +155,7 @@ const addToGroupChat = expressAsyncHandler(async (req, res) => {
 
     } catch (error) {
         res.status(400).json({ message: error.message });
-        console.log(err.message)
+        console.log(error.message)
     }
 })
 
@@ -189,7 +189,7 @@ const removeFromGroupChat = expressAsyncHandler(async (req, res) => {
 
     } catch (error) {
         res.status(400).json({ message: error.message });
-        console.log(err.message)
+        console.log(error.message)
     }
 })
 module.exports = {
